@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/Allenxuxu/mogutouERP/router"
 	"log"
 	"time"
 
@@ -15,9 +16,9 @@ import (
 )
 
 func main() {
-	path := flag.String("c", "./conf", "./conf")
+	path := flag.String("c", "./conf", "配置文件夹路径")
 	flag.Parse()
-
+	fmt.Println(*path, "----->")
 	token.InitConfig(*path+"/jwt.json", "jwt-key")
 	//read config
 	fileSource := file.NewSource(
@@ -38,8 +39,7 @@ func main() {
 
 	gin.DisableConsoleColor()
 	// gin.SetMode(gin.ReleaseMode)
-	r := initRouter()
-	//r := gin.Default()
+	r := router.InitRouter()
 	go func() {
 		time.Sleep(time.Second)
 		browser.OpenURL("http://127.0.0.1:1988/ui")

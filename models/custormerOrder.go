@@ -201,8 +201,9 @@ type CustormerOrderInfo struct {
 
 // ListCustormerOrders 获取所有客户订单
 func ListCustormerOrders() (orders []CustormerOrderInfo, err error) {
+	var temp CustormerOrder
 	err = db.Table("custormer_orders").Select(
-		"id, created_at, operator, name, tel, delivery_address, delivery_time, amount, deposit, remarks, state, freight").Find(&orders).Error
+		"id, created_at, operator, name, tel, delivery_address, delivery_time, amount, deposit, remarks, state, freight").Find(&temp).Error
 	if err != nil {
 		return
 	}
@@ -220,7 +221,7 @@ func ListCustormerOrders() (orders []CustormerOrderInfo, err error) {
 func getCustormerOrder(tx *gorm.DB, orderID string) (*CustormerOrderInfo, error) {
 	var order CustormerOrderInfo
 	err := tx.Table("custormer_orders").Select(
-		"id, created_at, operator, name, tel, delivery_address, delivery_time, amount, deposit, remarks, state, freight").Where("id = ?", orderID).First(&order).Error
+		"id, created_at, operator, name, tel, delivery_address, delivery_time, amount, deposit, remarks, state, freight").Where("id = ?", orderID).First(&order.CustormerOrder).Error
 	if err != nil {
 		return nil, err
 	}

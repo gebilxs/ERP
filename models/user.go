@@ -15,7 +15,7 @@ type User struct {
 	Name     string `gorm:"size:255;not null"`
 	Tel      string `gorm:"not null;unique_index"`
 	Password string `gorm:"not null"`
-	Position string `gorm:"not null"`
+	Position string `gorm:"default null"`
 }
 
 // Role 用户角色权限

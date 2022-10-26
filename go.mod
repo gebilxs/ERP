@@ -9,6 +9,7 @@ require (
 	github.com/micro/go-micro v1.18.0
 	github.com/pkg/browser v0.0.0-20210115035449-ce105d075bb4
 	github.com/rs/xid v1.3.0
+	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	gorm.io/driver/mysql v1.0.5
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.3
@@ -37,6 +38,5 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
-	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

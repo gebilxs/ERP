@@ -1,4 +1,4 @@
-package main
+package router
 
 import (
 	"embed"
@@ -13,7 +13,7 @@ import (
 // go:embed index.html  log.png  static
 var static embed.FS
 
-func initRouter() *gin.Engine {
+func InitRouter() *gin.Engine {
 	r := gin.New()
 
 	r.StaticFS("/ui", http.FS(static))
@@ -23,7 +23,7 @@ func initRouter() *gin.Engine {
 	corsConfig.AddAllowHeaders("Authorization")
 
 	r.Use(cors.New(corsConfig))
-	r.Use(gin.Logger())
+	//r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
 	rr := r.Group("/api/v1")

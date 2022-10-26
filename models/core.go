@@ -2,12 +2,9 @@ package models
 
 import (
 	"fmt"
-	"log"
-	"os"
-
 	"gorm.io/driver/mysql"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"log"
 )
 
 var db *gorm.DB
@@ -23,24 +20,16 @@ type DBInfo struct {
 // Init 初始化
 func Init(info *DBInfo) {
 	var err error
-
-	switch os.Getenv("MOGUTOU_DB") {
-	case "mysql":
-		db, err = gorm.Open(mysql.Open(info.Name+":"+info.Password+"@tcp("+info.Addr+")/"+info.DBname+"?charset=utf8&parseTime=True&loc=Local"), &gorm.Config{})
-		if err != nil {
-			fmt.Println(err)
-		}
-	default:
-		db, err = gorm.Open(sqlite.Open("mgt.db"), &gorm.Config{})
-	}
+	fmt.Println(info.Name, info.Password, info.Addr, info.DBname, "数据库===")
+	db, err = gorm.Open(mysql.Open(info.Name+":"+info.Password+"@tcp("+info.Addr+")/"+info.DBname+"?charset=utf8&parseTime=True&loc=Local"), &gorm.Config{})
 
 	if err != nil {
 		log.Fatalln("failed to connect database, ", err)
 	}
-
+	fmt.Println("初始化=====》》")
 	// db.LogMode(true)
 	db.AutoMigrate(&User{}, &Role{}, &Commodity{}, &CustormerOrder{}, &CustormerGoods{}, &PurchaseOrder{}, &PurchaseGoods{})
-	//auto create the table
+
 	// db.Model(&Role{}).AddForeignKey("user_id", "users(user_id)", "no action", "no action")
 
 	if err := createAdminUser(); err != nil {

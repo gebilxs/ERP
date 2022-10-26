@@ -139,8 +139,9 @@ type PurchaseOrderInfo struct {
 
 // ListPurchaseOrders 所有订单
 func ListPurchaseOrders() (orders []PurchaseOrderInfo, err error) {
+	var temp PurchaseOrder
 	err = db.Table("purchase_orders").Select(
-		"id, created_at, operator, amount, remarks, state, freight").Find(&orders).Error
+		"id, created_at, operator, amount, remarks, state, freight").Find(&temp).Error
 	if err != nil {
 		return
 	}
@@ -159,11 +160,10 @@ func ListPurchaseOrders() (orders []PurchaseOrderInfo, err error) {
 func getPurchaseOrder(tx *gorm.DB, orderID string) (*PurchaseOrderInfo, error) {
 	var order PurchaseOrderInfo
 	err := tx.Table("purchase_orders").Select(
-		"id, created_at, operator, amount, remarks, state, freight").Where("id = ?", orderID).First(&order).Error
+		"id, created_at, operator, amount, remarks, state, freight").Where("id = ?", orderID).First(&order.PurchaseOrder).Error
 	if err != nil {
 		return nil, err
 	}
-
 	err = tx.Raw(`select t2.id, t2.name, t2.colour, t2.size, t2.brand, t1.number from purchase_goods as t1 left outer join
 			commodities as t2 on t1.goods_id = t2.id where t1.purchase_order_id = ?`, orderID).Scan(&order.Goods).Error
 	if err != nil {
